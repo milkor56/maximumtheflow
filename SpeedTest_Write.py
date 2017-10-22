@@ -23,7 +23,7 @@ if __name__ == '__main__':
     dt = datetime.today()
 
     st = pyspeedtest.SpeedTest()
-    st_arry.append('%s/%s/%s' % (dt.month, dt.day, dt.year))
+
     if dt.hour > 12:
         hour = dt.hour - 12
         ampm = "PM"
@@ -37,13 +37,17 @@ if __name__ == '__main__':
         hour = dt.hour
         ampm = "AM"
     if len('%s' % dt.minute) == 1:
-        st_arry.append('%s:0%s %s' % (hour, dt.minute, ampm))
+        str_time = '%s:0%s %s' % (hour, dt.minute, ampm)
     else:
-        st_arry.append('%s:%s %s' % (hour, dt.minute, ampm))
+        str_time = '%s:%s %s' % (hour, dt.minute, ampm)
 
+    st_arry.append('%s/%s/%s %s' % (dt.month, dt.day, dt.year, str_time))
+    st_arry.append('%s/%s/%s' % (dt.month, dt.day, dt.year))
+    st_arry.append(str_time)
     st_arry.append(st.ping())
     st_arry.append(st.download() / 1024 / 1024)
     st_arry.append(st.upload() / 1024 / 1024)
+    st_arry.append(60)
 
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name(r'C:\git\not_in_git\maximumtheflow.json', scope)
